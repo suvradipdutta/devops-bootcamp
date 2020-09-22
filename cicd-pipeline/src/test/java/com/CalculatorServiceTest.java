@@ -13,13 +13,37 @@ import com.CalculatorService;
 public class CalculatorServiceTest {
 
 	@Test
-	public void test() {
+	public void testAdd() {
+		int a=30,b=20;
 		CalculatorService cs = new CalculatorService();
-
-		Assertions.assertEquals(cs.add(), 50);
-		Assertions.assertEquals(cs.subtract(), 10);
-		Assertions.assertEquals(cs.multiply(), 600);
-		Assertions.assertEquals(cs.divide(), 1);
-		Assertions.assertEquals(cs.remainder(), 10);
+		Assertions.assertEquals(cs.add(a,b), 50);
+	}
+	
+	@Test
+	public void testSubtract() {
+		int a=30,b=20;
+		CalculatorService cs = new CalculatorService();
+		Assertions.assertEquals(cs.subtract(a,b), 10);
+	}
+	
+	@Test
+	public void testMultiply() {
+		int a=30,b=20;
+		CalculatorService cs = new CalculatorService();
+		Assertions.assertEquals(cs.multiply(a,b), 600);
+	}
+	
+	@Test
+	public void testDivide() {
+		int a=30,b=20;
+		CalculatorService cs = new CalculatorService();
+		Assertions.assertEquals(cs.divide(a,b), 1);
+	}
+	
+	@Test
+	public void testReminder() {
+		int a=30,b=20;
+		CalculatorService cs = new CalculatorService();
+		Assertions.assertEquals(cs.remainder(a,b), 10);
 	}
 }

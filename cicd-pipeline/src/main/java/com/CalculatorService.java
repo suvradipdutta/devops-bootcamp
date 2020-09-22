@@ -1,35 +1,34 @@
 package com;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CalculatorService {
 	
-	int a=30,b=20;
-
-	@GetMapping("/sum")
-	public int add() {
-		return a+b;
+	@GetMapping("/sum/{num1}/{num2}")
+	public int add(@PathVariable("num1") Integer num1, @PathVariable("num2") Integer num2) {
+		return num1+num2;
 	}
 	
-	@GetMapping("/diff")
-	public int subtract() {
-		return a-b;
+	@GetMapping("/diff/{num1}/{num2}")
+	public int subtract(@PathVariable("num1") Integer num1, @PathVariable("num2") Integer num2) {
+		return num1-num2;
 	}
 	
-	@GetMapping("/product")
-	public int multiply() {
-		return a*b;
+	@GetMapping("/product/{num1}/{num2}")
+	public int multiply(@PathVariable("num1") Integer num1, @PathVariable("num2") Integer num2) {
+		return num1*num2;
 	}
 	
-	@GetMapping("/divisor")
-	public int divide() {
-		return a/b;
+	@GetMapping("/divisor/{num1}/{num2}")
+	public int divide(@PathVariable("num1") Integer num1, @PathVariable("num2") Integer num2) {
+		return num1/num2;
 	}
 	
-	@GetMapping("/remainder")
-	public int remainder() {
-		return a%b;
+	@GetMapping("/remainder/{num1}/{num2}")
+	public int remainder(@PathVariable("num1") Integer num1, @PathVariable("num2") Integer num2) {
+		return num1%num2;
 	}
 }
