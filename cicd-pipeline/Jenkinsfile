@@ -1,5 +1,5 @@
 node{
-    // Script for Windows machine
+    // Script for Ubuntu machine
     
     def mavenHome = tool name: 'maven-3', type: 'maven'
 	def mavenCMD = "${mavenHome}/bin/mvn"
@@ -12,34 +12,34 @@ node{
 	stage('mvn clean'){
 		// code for build
         dir("cicd-pipeline") {
-		    bat "${mavenCMD} clean"
+		    sh "${mavenCMD} clean"
 	    }
 	}
 	
 	stage('mvn compile'){
 		// code for build
         dir("cicd-pipeline") {
-		    bat "${mavenCMD} compile"
+		    sh "${mavenCMD} compile"
 	    }
 	}	
 	
 	stage('mvn test'){
 		// code for build
         dir("cicd-pipeline") {
-		    bat "${mavenCMD} test"
+		    sh "${mavenCMD} test"
 	    }
 	}	
 	
 	stage('mvn package'){
 		// code for build
         dir("cicd-pipeline") {
-		    bat "${mavenCMD} package"
+		    sh "${mavenCMD} package"
 	    }
 	}		
 	    
 	stage('Self checks') {
         dir("cicd-pipeline/target") {
-            bat "dir"
+            sh "ls -lrt"
         }
 	}
 }
