@@ -8,6 +8,6 @@ public class MessageService {
 	
 	@GetMapping("/hello")
 	public String sayHello() {
-		return "Good Morning";
+		return "Good Morning Suvradip";
 	}
 }
