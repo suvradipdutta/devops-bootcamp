@@ -72,9 +72,12 @@ node{
 	stage('docker push') {
 		sh "${dockerCMD} push suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
 	}
+	
+	stage('docker process check') {
+		sh "docker ps --filter publish=8100 --format {{.ID}} > container_id.file"
+	}
 
 	stage('docker kill') {
-		sh "docker ps --filter publish=8100 --format {{.ID}} > container_id.file"
 		try{
 			sh "docker kill ${cat container_id.file}"
 		} catch (Exception e) {
