@@ -48,7 +48,7 @@ node{
 	
 	stage('Docker checks') {
         dir("cicd-pipeline/target") {
-            sh "{dockerCMD} --version"
+            sh "${dockerCMD} --version"
         }
 	}
 
