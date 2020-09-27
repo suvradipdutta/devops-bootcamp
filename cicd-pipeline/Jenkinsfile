@@ -49,34 +49,44 @@ node{
 	    
 	stage('self checks') {
         dir("cicd-pipeline/target") {
-            sh "ls -lrt"
+            sh "ls -lrt *.jar"
         }
 	}
 	
-	stage('docker Version') {
-        dir("cicd-pipeline/target") {
+	stage('docker version') {
+        dir("cicd-pipeline") {
             sh "${dockerCMD} --version"
         }
 	}
 	
-		stage('docker build') {
-        dir("cicd-pipeline/target") {
+	stage('docker build') {
+        dir("cicd-pipeline") {
             sh "${dockerCMD} build -t suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER} ."
-        }
+		}
 	}
-	
-		stage('docker login') {
-        dir("cicd-pipeline/target") {
+
+	stage('docker login') {
+        dir("cicd-pipeline") {
            withCredentials([string(credentialsId: 'dockerHub', variable: 'dockerPassword')]) {
 				sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
 			}
         }
 	}
 	
-		stage('docker push') {
-        dir("cicd-pipeline/target") {
+	stage('docker push') {
+        dir("cicd-pipeline") {
             sh "${dockerCMD} push suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
         }
 	}
+
+	stage('docker run') {
+        dir("cicd-pipeline") {
+            sh "${dockerCMD} run -p 8888:8100 -d suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
+        }
+	}
+	
+	stage('cleanup workspace') {
+         cleanWs()
+	}	
 
 }
