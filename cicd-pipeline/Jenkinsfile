@@ -1,11 +1,6 @@
 node{
     // Script for Ubuntu machine
-	
-	environment {
-		registry = "suvradipdutta/springboot_app"
-		registryCredential = ‘dockerHub’ub’
-    }
-    
+
     def mavenHome = tool name: 'maven-3', type: 'maven'
 	def mavenCMD = "${mavenHome}/bin/mvn"
 	
