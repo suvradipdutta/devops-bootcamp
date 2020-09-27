@@ -61,13 +61,13 @@ node{
 	
 		stage('docker build') {
         dir("cicd-pipeline/target") {
-            sh "${dockerCMD} build -t suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"			
+            sh "${dockerCMD} build -t suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER} ."
         }
 	}
 	
 		stage('docker login') {
         dir("cicd-pipeline/target") {
-           withCredentials([string(credentialsId: 'dockerHub’ub’, variable: 'dockerPassword')]) {
+           withCredentials([string(credentialsId: 'dockerHub', variable: 'dockerPassword')]) {
 				sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
 			}
         }
