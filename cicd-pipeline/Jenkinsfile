@@ -64,7 +64,9 @@ node{
 	}
 
 	stage('docker login') {
-		sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
+		withCredentials([string(credentialsId: 'dockerHub', variable: 'dockerPassword')]) {
+			sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
+		}
 	}
 	
 	stage('docker push') {
