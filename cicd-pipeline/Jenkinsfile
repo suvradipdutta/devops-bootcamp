@@ -1,5 +1,10 @@
 node{
     // Script for Ubuntu machine
+	
+	environment {
+		registry = "suvradipdutta/springboot_app"
+		registryCredential = ‘dockerHub’ub’
+    }
     
     def mavenHome = tool name: 'maven-3', type: 'maven'
 	def mavenCMD = "${mavenHome}/bin/mvn"
@@ -11,6 +16,13 @@ node{
 		// code for checkout
 		git 'https://github.com/suvradipdutta/devops-bootcamp.git'
 	}
+	
+	stage('mvn version'){
+		// code for build
+        dir("cicd-pipeline") {
+		    sh "${mavenCMD} --version"
+	    }
+	}	
 	
 	stage('mvn clean'){
 		// code for build
@@ -40,15 +52,35 @@ node{
 	    }
 	}		
 	    
-	stage('Self checks') {
+	stage('self checks') {
         dir("cicd-pipeline/target") {
             sh "ls -lrt"
         }
 	}
 	
-	stage('Docker checks') {
+	stage('docker Version') {
         dir("cicd-pipeline/target") {
             sh "${dockerCMD} --version"
+        }
+	}
+	
+		stage('docker build') {
+        dir("cicd-pipeline/target") {
+            sh "${dockerCMD} build -t suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"			
+        }
+	}
+	
+		stage('docker login') {
+        dir("cicd-pipeline/target") {
+           withCredentials([string(credentialsId: 'dockerHub’ub’, variable: 'dockerPassword')]) {
+				sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
+			}
+        }
+	}
+	
+		stage('docker push') {
+        dir("cicd-pipeline/target") {
+            sh "${dockerCMD} push suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
         }
 	}
 
