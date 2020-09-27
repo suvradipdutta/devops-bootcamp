@@ -72,7 +72,8 @@ node{
 	}
 
 	stage('docker kill') {
-		sh "docker kill ${docker ps --filter publish=8100 --format {{.ID}} }"
+		sh "docker ps --filter publish=8100 --format {{.ID}} | container_id.file"
+		sh "docker kill ${cat container_id.file}"
 	}
 
 	stage('docker run') {
