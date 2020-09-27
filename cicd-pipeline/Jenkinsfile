@@ -78,11 +78,7 @@ node{
 	}
 
 	stage('docker kill') {
-		try{
-			sh "docker kill ${cat container_id.file}"
-		} catch (Exception e) {
-			echo "No running containers to kill"
-		}
+		sh "docker kill ${cat container_id.file} || true"
 	}
 
 	stage('docker run') {
