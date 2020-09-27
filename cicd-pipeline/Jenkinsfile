@@ -54,9 +54,7 @@ node{
 	}
 	
 	stage('docker version') {
-        dir("cicd-pipeline") {
-            sh "${dockerCMD} --version"
-		}
+		sh "${dockerCMD} --version"
 	}
 	
 	stage('docker build') {
@@ -66,23 +64,19 @@ node{
 	}
 
 	stage('docker login') {
-        dir("cicd-pipeline") {
-           withCredentials([string(credentialsId: 'dockerHub', variable: 'dockerPassword')]) {
-				sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
-			}
-        }
+		sh "${dockerCMD} login -u suvradipdutta -p ${dockerPassword}"
 	}
 	
 	stage('docker push') {
-        dir("cicd-pipeline") {
-            sh "${dockerCMD} push suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
-		}
+		sh "${dockerCMD} push suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
+	}
+
+	stage('docker kill') {
+		sh "docker kill $(docker ps --filter publish=8100 --format "{{.ID}}")"
 	}
 
 	stage('docker run') {
-        dir("cicd-pipeline") {
-            sh "${dockerCMD} run -p 8888:8100 -d suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
-		}
+		sh "${dockerCMD} run -p 8888:8100 -d suvradipdutta/springboot_app:1.1.${env.BUILD_NUMBER}"
 	}
 	
 	stage('cleanup workspace') {
