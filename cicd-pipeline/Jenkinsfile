@@ -3,6 +3,9 @@ node{
     
     def mavenHome = tool name: 'maven-3', type: 'maven'
 	def mavenCMD = "${mavenHome}/bin/mvn"
+	
+	def dockerHome = tool name: 'docker', type: 'dockerTool'
+	def dockerCMD = "${dockerHome}/bin/docker"
 
 	stage('git checkout'){
 		// code for checkout
@@ -42,4 +45,11 @@ node{
             sh "ls -lrt"
         }
 	}
+	
+	stage('Docker checks') {
+        dir("cicd-pipeline/target") {
+            sh "{dockerCMD} --version"
+        }
+	}
+
 }

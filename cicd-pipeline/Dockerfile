@@ -4,9 +4,9 @@ VOLUME /tmp
 
 EXPOSE 8888
 
-ARG JAR_FILE=cicd-pipeline/target/*.jar
+ARG JAR_FILE=target/*.jar
 
-COPY $(JAR_FILE) springboot.jar
+COPY ${JAR_FILE} springboot.jar
 
 RUN echo "Docker image creation started, please hold on for a moment........."
 
