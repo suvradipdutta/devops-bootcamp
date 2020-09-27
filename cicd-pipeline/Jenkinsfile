@@ -74,8 +74,12 @@ node{
 	}
 
 	stage('docker kill') {
-		sh "docker ps --filter publish=8100 --format {{.ID}} | container_id.file"
-		sh "docker kill ${cat container_id.file}"
+		try{
+			sh "docker ps --filter publish=8100 --format {{.ID}} | container_id.file"
+			sh "docker kill ${cat container_id.file}"
+		} catch (Exception e) {
+			echo "No running containers to kill"
+		}
 	}
 
 	stage('docker run') {
