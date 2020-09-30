@@ -1,0 +1,19 @@
+---
+- name : aws-launcher
+  hosts : localhost
+  connection : local
+  tasks :
+  - name : create instance
+  ec2:
+    image : ami-07efac79022b86107
+    instance_type : t2.micro
+    count : 1
+    region : us-east-2
+    vpc_subnet_id : default
+    assign_public_ip : yes
+    group : security-suvradip
+    wait: yes
+    key_name: key-suvradip
+    aws_access_key : AKIA2O3N5SCMXKR4HP6G
+    aws_secret_key : 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
+    
